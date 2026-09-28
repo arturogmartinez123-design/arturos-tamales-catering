@@ -1,0 +1,10 @@
+{
+  "name": "arturos-tamales-catering",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Arturo’s Tamales & Catering — Kansas City static site",
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "build": "sh build.sh"
+  }
+}

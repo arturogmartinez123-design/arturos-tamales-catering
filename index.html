@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arturo’s Tamales &amp; Catering | Kansas City</title>
+  <meta name="description" content="Arturo’s Tamales &amp; Catering. Authentic tamales and catering in Kansas City. Green Chicken and Shredded Red Pork, $28 per dozen. Pickup in the Northland or nearby delivery." />
+  <meta name="theme-color" content="#9c2b1a" />
+  <meta property="og:title" content="Arturo’s Tamales &amp; Catering | Kansas City" />
+  <meta property="og:description" content="Authentic tamales and catering in Kansas City. $28 per dozen. Green Chicken and Shredded Red Pork." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="icon" href="assets/brand-mark.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top">
+      <img class="brandmark" src="assets/brand-mark.svg" alt="" />
+      <span class="brand-name">
+        <strong>Arturo’s</strong>
+        <span>Tamales &amp; Catering</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <a href="#menu">Tamales</a>
+      <a href="#order">Order</a>
+      <a href="#catering">Catering</a>
+      <a href="#service-area">Pickup</a>
+      <a data-payments href="#order">Payments</a>
+      <a class="nav-cta" href="#order">Order tamales</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow" data-area>Kansas City Northland</p>
+          <h1>Arturo’s Tamales &amp; Catering</h1>
+          <p class="lede" data-tagline>Authentic tamales and catering in Kansas City</p>
+          <p class="hero-offer"><span data-price-number>$28</span> <span>per dozen · Green Chicken or Shredded Red Pork</span></p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#order">Order tamales</a>
+            <a class="btn btn-secondary" href="#catering">Request catering</a>
+          </div>
+        </div>
+        <figure class="hero-photo">
+          <img src="assets/tamale-flavors.webp" alt="Tamales unwrapped in corn husks, served with salsa" width="1200" height="800" />
+          <figcaption>
+            <strong data-price-number>$28</strong>
+            <span>per dozen. We confirm the batch before you pay.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <nav class="explore" aria-label="On this page">
+      <a href="#menu"><em>01</em> Tamales</a>
+      <a href="#order"><em>02</em> Order</a>
+      <a href="#catering"><em>03</em> Catering</a>
+      <a href="#signup"><em>04</em> Updates</a>
+    </nav>
+
+    <section class="section menu" id="menu">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div>
+            <p class="eyebrow">The tamales</p>
+            <h2>Two flavors. Mix a dozen if you want both.</h2>
+          </div>
+          <p>Corn masa, wrapped in husks, made for the table. Right now we are selling Green Chicken and Shredded Red Pork. Availability below is for the current batch and can change.</p>
+        </div>
+        <div class="menuGrid" id="menu-grid"></div>
+        <div class="facts">
+          <div><strong data-price>$28 / dozen</strong><span>Mix the two flavors in one order</span></div>
+          <div><strong>Corn masa</strong><span>Gluten-free ingredients</span></div>
+          <div><strong>Northland pickup</strong><span>Address sent after we confirm</span></div>
+          <div><strong>Allergies</strong><span>Shared kitchen—tell us first</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section orderSteps">
+      <div class="wrap steps">
+        <div>
+          <p class="eyebrow">How it works</p>
+          <h2>Inquire first. Pay after we confirm.</h2>
+          <p class="muted">This site does not charge a card. You send the order, we check the date and the batch, then you get a total and a way to pay.</p>
+        </div>
+        <ol>
+          <li>
+            <span class="num">1</span>
+            <div>
+              <strong>Choose Green Chicken, Shredded Red Pork, or both.</strong>
+              <p class="muted">Stay within what’s listed as available for this batch.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <div>
+              <strong>Tell us the date and pickup or delivery.</strong>
+              <p class="muted">Delivery is generally within <span data-radius>10</span> miles of the Northland.</p>
+            </div>
+          </li>
+          <li>
+            <span class="num">3</span>
+            <div>
+              <strong>We confirm. Then you pay.</strong>
+              <p class="muted">Nothing is booked until we reply.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section inquire" id="order">
+      <div class="wrap inquire-layout">
+        <div>
+          <p class="eyebrow">Order tamales</p>
+          <h2>Green Chicken, Shredded Red Pork, or a mix.</h2>
+          <p>Enter dozens for each flavor. If inventory limits are on, you cannot request more than we have listed for this batch.</p>
+          <ul class="inquire-points">
+            <li>Kansas City area pickup and nearby delivery</li>
+            <li>Corn masa and gluten-free ingredients</li>
+            <li>Tell us about allergies before we confirm</li>
+          </ul>
+        </div>
+
+        <form id="order-form" novalidate>
+          <fieldset>
+            <legend>How to reach you</legend>
+            <div class="form-grid">
+              <label>First name
+                <input name="first" required autocomplete="given-name" />
+              </label>
+              <label>Last name
+                <input name="last" required autocomplete="family-name" />
+              </label>
+              <label>Email
+                <input type="email" name="email" required autocomplete="email" />
+              </label>
+              <label>Phone
+                <input type="tel" name="phone" required autocomplete="tel" />
+              </label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>What you want</legend>
+            <div class="form-grid" id="flavor-fields"></div>
+            <p class="order-summary" id="order-summary" aria-live="polite"></p>
+            <div class="form-grid">
+              <label>Requested date
+                <input type="date" name="date" required />
+              </label>
+              <label>Pickup or delivery
+                <select name="receive" required>
+                  <option value="Pickup in the Northland">Pickup in the Northland</option>
+                  <option value="Delivery">Delivery (we’ll check the address)</option>
+                </select>
+              </label>
+              <label class="full">Notes
+                <textarea name="notes" placeholder="Delivery address, mix notes, allergies, or questions."></textarea>
+              </label>
+            </div>
+          </fieldset>
+          <label class="check">
+            <input type="checkbox" name="updates" value="yes" />
+            <span>Yes, tell me when the next batch is ready or a new flavor comes back.</span>
+          </label>
+          <p class="legal">We’ll use this to confirm your order. Check the box only if you’d like those notes too.</p>
+          <p class="notice" id="order-notice" hidden></p>
+          <button class="btn btn-primary" type="submit">Send tamale order</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section catering" id="catering">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div>
+            <p class="eyebrow">Catering</p>
+            <h2>Tamales for the table, quoted for your guest count.</h2>
+          </div>
+          <p>Birthdays, office lunches, graduations, family gatherings, and other Kansas City events. Tell us the date, place, and how you want it served. We confirm food, travel, and setup in a quote—this page does not book a date on its own.</p>
+        </div>
+
+        <div class="offer-grid">
+          <article>
+            <h3>Tamale trays</h3>
+            <p>Green Chicken and Shredded Red Pork packed for a group. Mix the two flavors. Portions are based on your guest count.</p>
+          </article>
+          <article>
+            <h3>Buffet-style service</h3>
+            <p>Ready-to-serve trays for guests to plate themselves, or a drop-off that you set out.</p>
+          </article>
+          <article>
+            <h3>Sides</h3>
+            <p>Ask about rice, beans, salsa, and other sides when you inquire. What we can bring depends on the date and the size of the event.</p>
+          </article>
+          <article>
+            <h3>Equipment and setup</h3>
+            <p>Chafers, serving utensils, and table setup can be quoted when you need them. Travel is priced separately if the venue is outside our usual range.</p>
+          </article>
+          <article>
+            <h3>Staffed service</h3>
+            <p>For larger gatherings we can talk about someone on site to help serve. Staffing is quoted only when it fits the event.</p>
+          </article>
+          <article>
+            <h3>Custom event menus</h3>
+            <p>Start with tamales. If you need a fuller spread, describe the occasion and we’ll say what we can do for that date.</p>
+          </article>
+        </div>
+
+        <div class="photoGrid">
+          <figure>
+            <img src="assets/catering-tamale-tray.jpg" alt="Husk-wrapped tamales stacked on a wooden board" width="1200" height="800" />
+          </figure>
+          <figure>
+            <img src="assets/catering-buffet-setup.jpg" alt="Clay bowls of red and orange salsa with fresh chiles" width="1600" height="1067" />
+          </figure>
+          <figure>
+            <img src="assets/catering-serving-tamales.jpg" alt="Husk-wrapped tamales being plated in a kitchen" width="1200" height="800" />
+          </figure>
+          <figure class="photo-slot" aria-label="Placeholder for a future photo of an Arturo’s catering event">
+            <span>Photo slot: your next event</span>
+            <small>We’ll add a picture from a real Arturo’s gathering here. This is not a past client event.</small>
+          </figure>
+        </div>
+        <p class="note">The tamale and salsa photographs are real food photos. They are not a guarantee of a specific past event or client.</p>
+
+        <div class="catering-form-wrap">
+          <div>
+            <p class="eyebrow">Catering inquiry</p>
+            <h2>Tell us the date, place, and guest count.</h2>
+            <p class="muted">We’ll reply with availability and a quote. Nothing is reserved until we confirm.</p>
+          </div>
+          <form id="catering-form">
+            <fieldset>
+              <legend>Contact</legend>
+              <div class="form-grid">
+                <label>First name
+                  <input name="first" required autocomplete="given-name" />
+                </label>
+                <label>Last name
+                  <input name="last" required autocomplete="family-name" />
+                </label>
+                <label>Email
+                  <input type="email" name="email" required autocomplete="email" />
+                </label>
+                <label>Phone
+                  <input type="tel" name="phone" required autocomplete="tel" />
+                </label>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>The event</legend>
+              <div class="form-grid">
+                <label>Estimated guest count
+                  <input type="number" name="guests" min="1" required placeholder="e.g. 40" />
+                </label>
+                <label>Event date
+                  <input type="date" name="date" required />
+                </label>
+                <label class="full">Location
+                  <input name="location" required placeholder="Neighborhood, venue, or address" />
+                </label>
+                <label>Service style
+                  <select name="style" required>
+                    <option value="Tamale trays / pickup">Tamale trays / pickup</option>
+                    <option value="Drop-off">Drop-off</option>
+                    <option value="Buffet-style">Buffet-style</option>
+                    <option value="Setup help">Help with setup</option>
+                    <option value="Staffed service">Staffed service (if it fits)</option>
+                    <option value="Not sure yet">Not sure yet</option>
+                  </select>
+                </label>
+                <label>Food preferences
+                  <select name="food">
+                    <option value="Green Chicken and Shredded Red Pork">Green Chicken and Shredded Red Pork</option>
+                    <option value="Green Chicken">Green Chicken</option>
+                    <option value="Shredded Red Pork">Shredded Red Pork</option>
+                    <option value="Tamales plus sides">Tamales plus sides</option>
+                    <option value="Let’s discuss">Let’s discuss</option>
+                  </select>
+                </label>
+                <label class="full">Additional details
+                  <textarea name="details" placeholder="Occasion, timing, dietary needs, equipment, or questions."></textarea>
+                </label>
+              </div>
+            </fieldset>
+            <label class="check">
+              <input type="checkbox" name="updates" value="yes" />
+              <span>Yes, keep me posted on catering menus and open dates.</span>
+            </label>
+            <p class="notice" id="catering-notice" hidden></p>
+            <button class="btn btn-primary" type="submit">Request a catering quote</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section serviceArea" id="service-area">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Pickup &amp; delivery</p>
+          <h2>Northland pickup. Delivery about <span data-radius>10</span> miles out.</h2>
+          <p>Pick up confirmed orders from our Northland area. Standard delivery is generally within that radius. Farther trips and catering venues get a separate travel quote.</p>
+        </div>
+        <div class="panel">
+          <p><strong>Not sure you’re in range?</strong></p>
+          <p class="muted">Put the address in the order or catering notes. We’ll confirm the route before you pay. These forms never charge a card.</p>
+          <p><a class="cardLink" href="#order">Start with a tamale order</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section signup" id="signup">
+      <div class="wrap signup-layout">
+        <div>
+          <p class="eyebrow">Email list</p>
+          <h2>Be first to hear when a batch is ready.</h2>
+          <p>New flavors, pop-ups, and catering dates. Leave your email and we’ll send a short note when something’s coming up.</p>
+        </div>
+        <form id="signup-form">
+          <label>Email
+            <input type="email" name="email" required autocomplete="email" placeholder="you@email.com" />
+          </label>
+          <button class="btn btn-primary" type="submit">Join the list</button>
+          <p class="notice" id="signup-notice" hidden></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <strong data-business-name>Arturo’s Tamales &amp; Catering</strong>
+        <div>Kansas City, Missouri</div>
+        <div class="foot-meta">Tamales <span data-price>$28 / dozen</span></div>
+      </div>
+      <nav aria-label="Footer">
+        <a href="#order">Order tamales</a>
+        <a href="#catering">Catering</a>
+        <a data-payments href="#order">Payments</a>
+        <a data-inbox href="#order">Owner inbox</a>
+        <a href="#top">Back to top</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
