@@ -716,13 +716,20 @@ footer {
 .catering :focus-visible,
 footer :focus-visible { outline-color: var(--gold-bright); }
 
-.js .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+/* Motion only. Text stays painted if JS, IntersectionObserver, or the
+   scroll never runs (print, reduced motion, full-page capture). */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal.is-in { animation: reveal-rise 0.65s ease; }
 }
 
-.js .reveal.is-in { opacity: 1; transform: none; }
+@keyframes reveal-rise {
+  from { transform: translateY(14px); }
+  to { transform: none; }
+}
+
+@media print {
+  .reveal { animation: none !important; transform: none !important; opacity: 1 !important; }
+}
 
 .missing {
   min-height: 100vh;
@@ -834,9 +841,9 @@ footer :focus-visible { outline-color: var(--gold-bright); }
   .btn,
   .topbar,
   .brandmark {
+    animation: none;
     transition: none;
     transform: none;
-    opacity: 1;
   }
 
   .flavor-card:hover,
