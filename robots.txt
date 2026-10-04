@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arturos-tamales-catering.onrender.com/sitemap.xml
