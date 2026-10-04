@@ -6,11 +6,26 @@
   <title>Arturo’s Tamales &amp; Catering | Kansas City</title>
   <meta name="description" content="Arturo’s Tamales &amp; Catering. Authentic tamales and catering in Kansas City. Green Chicken and Shredded Red Pork, $28 per dozen. Pickup in the Northland or nearby delivery." />
   <meta name="theme-color" content="#9c2b1a" />
+  <link rel="canonical" href="https://arturos-tamales-catering.onrender.com/" />
   <meta property="og:title" content="Arturo’s Tamales &amp; Catering | Kansas City" />
   <meta property="og:description" content="Authentic tamales and catering in Kansas City. $28 per dozen. Green Chicken and Shredded Red Pork." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Arturo’s Tamales &amp; Catering" />
+  <meta property="og:url" content="https://arturos-tamales-catering.onrender.com/" />
+  <meta property="og:image" content="https://arturos-tamales-catering.onrender.com/assets/og-image.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Tamales in corn husks with salsa" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Arturo’s Tamales &amp; Catering | Kansas City" />
+  <meta name="twitter:description" content="Authentic tamales and catering in Kansas City. $28 per dozen. Green Chicken and Shredded Red Pork." />
+  <meta name="twitter:image" content="https://arturos-tamales-catering.onrender.com/assets/og-image.jpg" />
+  <meta name="twitter:image:alt" content="Tamales in corn husks with salsa" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" href="assets/brand-mark.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;1,400&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&amp;display=swap" rel="stylesheet" />
@@ -21,7 +36,7 @@
 
   <header class="topbar">
     <a class="brand" href="#top">
-      <img class="brandmark" src="assets/brand-mark.svg" alt="" />
+      <img class="brandmark" src="assets/brand-mark.svg" alt="" width="80" height="80" />
       <span class="brand-name">
         <strong>Arturo’s</strong>
         <span>Tamales &amp; Catering</span>
@@ -30,10 +45,9 @@
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav class="nav" id="site-nav" aria-label="Primary">
       <a href="#menu">Tamales</a>
-      <a href="#order">Order</a>
       <a href="#catering">Catering</a>
       <a href="#service-area">Pickup</a>
-      <a data-payments href="#order">Payments</a>
+      <a href="#signup">Updates</a>
       <a class="nav-cta" href="#order">Order tamales</a>
     </nav>
   </header>
@@ -52,21 +66,14 @@
           </div>
         </div>
         <figure class="hero-photo">
-          <img src="assets/tamale-flavors.webp" alt="Tamales unwrapped in corn husks, served with salsa" width="1200" height="800" />
+          <img src="assets/tamale-flavors.webp" alt="Tamales unwrapped in corn husks, served with salsa" width="1000" height="667" />
           <figcaption>
             <strong data-price-number>$28</strong>
-            <span>per dozen. We confirm the batch before you pay.</span>
+            <span>per dozen for the current batch.</span>
           </figcaption>
         </figure>
       </div>
     </section>
-
-    <nav class="explore" aria-label="On this page">
-      <a href="#menu"><em>01</em> Tamales</a>
-      <a href="#order"><em>02</em> Order</a>
-      <a href="#catering"><em>03</em> Catering</a>
-      <a href="#signup"><em>04</em> Updates</a>
-    </nav>
 
     <section class="section menu" id="menu">
       <div class="wrap">
@@ -92,7 +99,7 @@
         <div>
           <p class="eyebrow">How it works</p>
           <h2>Inquire first. Pay after we confirm.</h2>
-          <p class="muted">This site does not charge a card. You send the order, we check the date and the batch, then you get a total and a way to pay.</p>
+          <p class="muted">You send the request. We check the date and the batch, then email you a total.</p>
         </div>
         <ol>
           <li>
@@ -113,7 +120,7 @@
             <span class="num">3</span>
             <div>
               <strong>We confirm. Then you pay.</strong>
-              <p class="muted">Nothing is booked until we reply.</p>
+              <p class="muted">We email the total. <a href="#pay">Venmo</a> is for after that.</p>
             </div>
           </li>
         </ol>
@@ -125,15 +132,16 @@
         <div>
           <p class="eyebrow">Order tamales</p>
           <h2>Green Chicken, Shredded Red Pork, or a mix.</h2>
-          <p>Enter dozens for each flavor. If inventory limits are on, you cannot request more than we have listed for this batch.</p>
-          <ul class="inquire-points">
-            <li>Kansas City area pickup and nearby delivery</li>
-            <li>Corn masa and gluten-free ingredients</li>
-            <li>Tell us about allergies before we confirm</li>
-          </ul>
+          <p>Enter dozens for each flavor. You can’t request more than this batch has left. Sold-out flavors stay on the menu and can’t be ordered.</p>
         </div>
 
         <form id="order-form" novalidate>
+          <p class="request-note">This is an order request, not a payment. We’ll confirm availability and your total before you pay.</p>
+          <div class="hp" aria-hidden="true">
+            <label>Company website
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
           <fieldset>
             <legend>How to reach you</legend>
             <div class="form-grid">
@@ -158,6 +166,7 @@
             <div class="form-grid">
               <label>Requested date
                 <input type="date" name="date" required />
+                <span class="field-hint" data-lead-hint>Tomorrow or later.</span>
               </label>
               <label>Pickup or delivery
                 <select name="receive" required>
@@ -174,8 +183,7 @@
             <input type="checkbox" name="updates" value="yes" />
             <span>Yes, tell me when the next batch is ready or a new flavor comes back.</span>
           </label>
-          <p class="legal">We’ll use this to confirm your order. Check the box only if you’d like those notes too.</p>
-          <p class="notice" id="order-notice" hidden></p>
+          <p class="notice" id="order-notice" hidden tabindex="-1"></p>
           <button class="btn btn-primary" type="submit">Send tamale order</button>
         </form>
       </div>
@@ -188,7 +196,7 @@
             <p class="eyebrow">Catering</p>
             <h2>Tamales for the table, quoted for your guest count.</h2>
           </div>
-          <p>Birthdays, office lunches, graduations, family gatherings, and other Kansas City events. Tell us the date, place, and how you want it served. We confirm food, travel, and setup in a quote—this page does not book a date on its own.</p>
+          <p>Birthdays, office lunches, graduations, family gatherings, and other Kansas City events. Tell us the date, place, and how you want it served. The quote covers food, travel, and setup.</p>
         </div>
 
         <div class="offer-grid">
@@ -220,28 +228,29 @@
 
         <div class="photoGrid">
           <figure>
-            <img src="assets/catering-tamale-tray.jpg" alt="Husk-wrapped tamales stacked on a wooden board" width="1200" height="800" />
+            <img src="assets/catering-tamale-tray.jpg" alt="Tray of tamales on a wooden board, some opened to show the filling" width="960" height="640" loading="lazy" decoding="async" />
           </figure>
           <figure>
-            <img src="assets/catering-buffet-setup.jpg" alt="Clay bowls of red and orange salsa with fresh chiles" width="1600" height="1067" />
+            <img src="assets/catering-buffet-setup.jpg" alt="Buffet with tamales, rice, beans, and salsa" width="800" height="534" loading="lazy" decoding="async" />
           </figure>
           <figure>
-            <img src="assets/catering-serving-tamales.jpg" alt="Husk-wrapped tamales being plated in a kitchen" width="1200" height="800" />
-          </figure>
-          <figure class="photo-slot" aria-label="Placeholder for a future photo of an Arturo’s catering event">
-            <span>Photo slot: your next event</span>
-            <small>We’ll add a picture from a real Arturo’s gathering here. This is not a past client event.</small>
+            <img src="assets/catering-serving-tamales.jpg" alt="Plated tamales with salsa in a kitchen" width="800" height="533" loading="lazy" decoding="async" />
           </figure>
         </div>
-        <p class="note">The tamale and salsa photographs are real food photos. They are not a guarantee of a specific past event or client.</p>
+        <p class="note">These are real food photos. They are not a picture of a specific past client event.</p>
 
         <div class="catering-form-wrap">
           <div>
             <p class="eyebrow">Catering inquiry</p>
             <h2>Tell us the date, place, and guest count.</h2>
-            <p class="muted">We’ll reply with availability and a quote. Nothing is reserved until we confirm.</p>
+            <p class="muted">We’ll reply with availability and a quote.</p>
           </div>
-          <form id="catering-form">
+          <form id="catering-form" novalidate>
+            <div class="hp" aria-hidden="true">
+              <label>Company website
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
             <fieldset>
               <legend>Contact</legend>
               <div class="form-grid">
@@ -263,10 +272,11 @@
               <legend>The event</legend>
               <div class="form-grid">
                 <label>Estimated guest count
-                  <input type="number" name="guests" min="1" required placeholder="e.g. 40" />
+                  <input type="number" name="guests" min="1" step="1" required inputmode="numeric" placeholder="e.g. 40" />
                 </label>
                 <label>Event date
                   <input type="date" name="date" required />
+                  <span class="field-hint" data-lead-hint>Tomorrow or later.</span>
                 </label>
                 <label class="full">Location
                   <input name="location" required placeholder="Neighborhood, venue, or address" />
@@ -299,7 +309,7 @@
               <input type="checkbox" name="updates" value="yes" />
               <span>Yes, keep me posted on catering menus and open dates.</span>
             </label>
-            <p class="notice" id="catering-notice" hidden></p>
+            <p class="notice" id="catering-notice" hidden tabindex="-1"></p>
             <button class="btn btn-primary" type="submit">Request a catering quote</button>
           </form>
         </div>
@@ -315,8 +325,22 @@
         </div>
         <div class="panel">
           <p><strong>Not sure you’re in range?</strong></p>
-          <p class="muted">Put the address in the order or catering notes. We’ll confirm the route before you pay. These forms never charge a card.</p>
-          <p><a class="cardLink" href="#order">Start with a tamale order</a></p>
+          <p class="muted">Put the address in the order or catering notes. We’ll confirm the route.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pay" id="pay">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Payment</p>
+          <h2>Pay with Venmo after we confirm.</h2>
+          <p>Arturo confirms the order and the total first. Then send that amount to <strong data-venmo-handle>@Arturo-Gomez-70</strong>. Put your name and the order date in the Venmo note.</p>
+        </div>
+        <div class="panel">
+          <p><strong>Venmo</strong></p>
+          <p class="muted">Confirm the account name in Venmo before you send.</p>
+          <p><a class="btn btn-primary" data-venmo href="https://venmo.com/Arturo-Gomez-70" target="_blank" rel="noopener noreferrer">Pay with Venmo</a></p>
         </div>
       </div>
     </section>
@@ -324,16 +348,21 @@
     <section class="section signup" id="signup">
       <div class="wrap signup-layout">
         <div>
-          <p class="eyebrow">Email list</p>
-          <h2>Be first to hear when a batch is ready.</h2>
-          <p>New flavors, pop-ups, and catering dates. Leave your email and we’ll send a short note when something’s coming up.</p>
+          <p class="eyebrow">Updates</p>
+          <h2>Hear when a batch is ready.</h2>
+          <p>New batches, flavors, and catering dates. Leave your email and Arturo can send a short note when something is coming up.</p>
         </div>
-        <form id="signup-form">
+        <form id="signup-form" novalidate>
+          <div class="hp" aria-hidden="true">
+            <label>Company website
+              <input type="text" name="_honey" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
           <label>Email
             <input type="email" name="email" required autocomplete="email" placeholder="you@email.com" />
           </label>
-          <button class="btn btn-primary" type="submit">Join the list</button>
-          <p class="notice" id="signup-notice" hidden></p>
+          <p class="notice" id="signup-notice" hidden tabindex="-1"></p>
+          <button class="btn btn-primary" type="submit">Request updates</button>
         </form>
       </div>
     </section>
@@ -343,14 +372,19 @@
     <div class="wrap foot">
       <div>
         <strong data-business-name>Arturo’s Tamales &amp; Catering</strong>
-        <div>Kansas City, Missouri</div>
+        <div data-place>Kansas City, Missouri</div>
+        <div class="contact" id="contact">
+          <a id="contact-phone" href="tel:+18162037610">(816) 203-7610</a>
+          <a id="contact-email" href="mailto:arturogmartinez123@gmail.com">arturogmartinez123@gmail.com</a>
+          <p id="contact-address" hidden></p>
+        </div>
         <div class="foot-meta">Tamales <span data-price>$28 / dozen</span></div>
       </div>
       <nav aria-label="Footer">
-        <a href="#order">Order tamales</a>
+        <a href="#order">Order</a>
         <a href="#catering">Catering</a>
-        <a data-payments href="#order">Payments</a>
-        <a data-inbox href="#order">Owner inbox</a>
+        <a href="#pay">Payment</a>
+        <a href="#signup">Updates</a>
         <a href="#top">Back to top</a>
       </nav>
     </div>

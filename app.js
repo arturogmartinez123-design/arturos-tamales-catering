@@ -8,6 +8,14 @@
     maximumFractionDigits: 0
   });
 
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
   function availableFlavors() {
     return (config.flavors || []).filter(function (flavor) {
       return flavor.available;
@@ -37,7 +45,7 @@
         const left = remaining(flavor);
         const soldOut = config.inventoryEnabled && left <= 0;
         const stock = !config.inventoryEnabled
-          ? "Ask us about today’s batch"
+          ? "Ask about this batch"
           : soldOut
             ? "Sold out for this batch"
             : left + " dozen available";
@@ -46,21 +54,21 @@
           (soldOut ? "sold-out" : "") +
           '">' +
           '<span class="category">' +
-          flavor.category +
+          escapeHtml(flavor.category) +
           "</span>" +
           "<h3>" +
-          flavor.name +
+          escapeHtml(flavor.name) +
           "</h3>" +
           "<p>" +
-          flavor.description +
+          escapeHtml(flavor.description) +
           "</p>" +
           '<p class="stock">' +
-          stock +
+          escapeHtml(stock) +
           "</p>" +
           (soldOut
             ? '<span class="cardLink muted">Currently unavailable</span>'
             : '<a class="cardLink" href="#order">Order ' +
-              flavor.name +
+              escapeHtml(flavor.name) +
               "</a>") +
           "</article>"
         );
@@ -77,19 +85,19 @@
         const soldOut = config.inventoryEnabled && max <= 0;
         const maxAttr = config.inventoryEnabled ? ' max="' + max + '"' : "";
         return (
-          '<label>' +
-          flavor.name +
+          "<label>" +
+          escapeHtml(flavor.name) +
           " (dozens)" +
-          '<input type="number" min="0"' +
+          '<input type="number" min="0" step="1"' +
           maxAttr +
-          ' value="0" data-flavor-id="' +
-          flavor.id +
-          '" ' +
-          (soldOut ? "disabled" : "") +
+          ' value="0" inputmode="numeric" data-flavor-id="' +
+          escapeHtml(flavor.id) +
+          '"' +
+          (soldOut ? " disabled" : "") +
           " />" +
           (config.inventoryEnabled
             ? '<span class="field-hint">' +
-              (soldOut ? "Sold out" : max + " dozen left in this batch") +
+              escapeHtml(soldOut ? "Sold out" : max + " dozen left in this batch") +
               "</span>"
             : "") +
           "</label>"
@@ -101,27 +109,54 @@
   function orderQuantities() {
     const quantities = {};
     document.querySelectorAll("[data-flavor-id]").forEach(function (input) {
-      quantities[input.getAttribute("data-flavor-id")] = Number(input.value) || 0;
+      quantities[input.getAttribute("data-flavor-id")] = String(input.value || "0").trim();
     });
     return quantities;
   }
 
+  function dozenCount(raw) {
+    if (!/^\d+$/.test(String(raw || "0"))) return null;
+    return parseInt(raw || "0", 10);
+  }
+
+  function allSoldOut() {
+    const flavors = availableFlavors();
+    return (
+      config.inventoryEnabled &&
+      flavors.length > 0 &&
+      flavors.every(function (flavor) {
+        return remaining(flavor) <= 0;
+      })
+    );
+  }
+
   function updateOrderSummary() {
     const summary = document.getElementById("order-summary");
+    const button = document.querySelector("#order-form button[type=submit]");
     if (!summary) return;
+    const soldOut = allSoldOut();
+    if (button && button.dataset.sending !== "1") button.disabled = soldOut;
+    if (!availableFlavors().length) {
+      summary.textContent = "Nothing is on the menu right now.";
+      if (button && button.dataset.sending !== "1") button.disabled = true;
+      return;
+    }
+    if (soldOut) {
+      summary.textContent = "Sold out for this batch. Check back when the next batch is ready.";
+      return;
+    }
+
     const quantities = orderQuantities();
     let totalDozens = 0;
-    const lines = availableFlavors().map(function (flavor) {
-      const qty = quantities[flavor.id] || 0;
-      totalDozens += qty;
-      return qty
-        ? flavor.name + " × " + qty
-        : "";
-    }).filter(Boolean);
-
-    const mixNote =
-      lines.length > 1 ? " Mixed order." : lines.length === 1 ? "" : " Choose at least one flavor.";
-
+    const lines = availableFlavors()
+      .map(function (flavor) {
+        const qty = dozenCount(quantities[flavor.id]);
+        const safe = qty == null ? 0 : qty;
+        totalDozens += safe;
+        return safe ? flavor.name + " × " + safe : "";
+      })
+      .filter(Boolean);
+    const mixNote = lines.length > 1 ? " Mixed order." : "";
     summary.textContent = totalDozens
       ? lines.join(" · ") +
         ". " +
@@ -134,11 +169,15 @@
   }
 
   function validateOrder(quantities) {
+    const flavors = availableFlavors();
+    if (!flavors.length) return "Nothing is on the menu right now.";
+    if (allSoldOut()) return "Sold out for this batch.";
     let total = 0;
-    for (let i = 0; i < availableFlavors().length; i += 1) {
-      const flavor = availableFlavors()[i];
-      const qty = quantities[flavor.id] || 0;
-      if (qty < 0) return flavor.name + " can’t be negative.";
+    for (let i = 0; i < flavors.length; i += 1) {
+      const flavor = flavors[i];
+      const raw = quantities[flavor.id] == null || quantities[flavor.id] === "" ? "0" : quantities[flavor.id];
+      const qty = dozenCount(raw);
+      if (qty == null) return "Enter whole dozens for " + flavor.name + ".";
       if (config.inventoryEnabled && qty > remaining(flavor)) {
         return (
           "Only " +
@@ -150,176 +189,490 @@
       }
       total += qty;
     }
-    if (total < 1) return "Add at least one dozen to continue.";
+    if (total < 1) return "Add at least one dozen.";
     return "";
+  }
+
+  function phoneDigits(value) {
+    return String(value || "").replace(/\D/g, "");
+  }
+
+  function formatPhoneTel(value) {
+    const digits = phoneDigits(value);
+    if (digits.length === 10) return "+1" + digits;
+    if (digits.length === 11 && digits.charAt(0) === "1") return "+" + digits;
+    return "";
+  }
+
+  function formatPhoneDisplay(value) {
+    const digits = phoneDigits(value);
+    const core = digits.length === 11 && digits.charAt(0) === "1" ? digits.slice(1) : digits;
+    if (core.length === 10) {
+      return "(" + core.slice(0, 3) + ") " + core.slice(3, 6) + "-" + core.slice(6);
+    }
+    return String(value || "").trim();
+  }
+
+  function isValidPhone(value) {
+    if (/[a-z]/i.test(value)) return false;
+    const digits = phoneDigits(value);
+    if (digits.length === 10) return true;
+    return digits.length === 11 && digits.charAt(0) === "1";
+  }
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  function leadDays() {
+    const n = Number(config.minimumLeadDays);
+    if (!isFinite(n) || n < 0) return 1;
+    return Math.floor(n);
+  }
+
+  function startOfToday() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
+  }
+
+  function minimumDate() {
+    const date = startOfToday();
+    date.setDate(date.getDate() + leadDays());
+    return date;
+  }
+
+  function formatISODate(date) {
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return date.getFullYear() + "-" + month + "-" + day;
+  }
+
+  function parseISODate(value) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!match) return null;
+    const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    date.setHours(0, 0, 0, 0);
+    if (
+      date.getFullYear() !== Number(match[1]) ||
+      date.getMonth() !== Number(match[2]) - 1 ||
+      date.getDate() !== Number(match[3])
+    ) {
+      return null;
+    }
+    return date;
+  }
+
+  function formatHuman(date) {
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
+  }
+
+  function dateError(value) {
+    if (!value) return "Choose a date.";
+    const picked = parseISODate(value);
+    if (!picked) return "Enter a valid date.";
+    const min = minimumDate();
+    if (picked < min) {
+      if (leadDays() === 0) return "Choose today or a later date.";
+      if (leadDays() === 1) return "Choose tomorrow or a later date.";
+      return "Choose " + formatHuman(min) + " or later.";
+    }
+    return "";
+  }
+
+  function leadHint() {
+    if (leadDays() === 0) return "Today or later.";
+    if (leadDays() === 1) return "Tomorrow or later.";
+    return formatHuman(minimumDate()) + " or later.";
+  }
+
+  function applyDateMins() {
+    const min = formatISODate(minimumDate());
+    const hint = leadHint();
+    document.querySelectorAll('input[type="date"]').forEach(function (input) {
+      input.min = min;
+    });
+    document.querySelectorAll("[data-lead-hint]").forEach(function (node) {
+      node.textContent = hint;
+    });
   }
 
   function formValues(form) {
     const data = {};
-    new FormData(form).forEach(function (value, key) {
-      data[key] = String(value).trim();
+    Array.prototype.forEach.call(form.elements, function (el) {
+      if (!el.name || el.type === "submit" || el.name === "_honey") return;
+      if (el.type === "checkbox") {
+        data[el.name] = el.checked ? String(el.value || "yes") : "";
+        return;
+      }
+      data[el.name] = String(el.value || "").trim();
     });
     return data;
   }
 
-  function buildMailto(subject, body) {
-    const email = config.inquiryEmail;
-    if (!email) return "";
-    return (
-      "mailto:" +
-      encodeURIComponent(email) +
-      "?subject=" +
-      encodeURIComponent(subject) +
-      "&body=" +
-      encodeURIComponent(body)
-    );
-  }
-
   function showNotice(id, message, isError) {
     const node = document.getElementById(id);
-    if (!node) return;
+    if (!node) return null;
     node.hidden = false;
     node.textContent = message;
     node.classList.toggle("notice-error", Boolean(isError));
     node.classList.toggle("notice-ok", !isError);
+    node.setAttribute("role", isError ? "alert" : "status");
+    return node;
   }
 
-  function optionalUpdatesLine(checked) {
-    return checked
-      ? "Also asked to join the email list for updates."
-      : "Did not join the email list.";
+  function focusNotice(id) {
+    const node = document.getElementById(id);
+    if (node) node.focus();
   }
 
-  function missingContact(fields, extras) {
-    if (!fields.first || !fields.last) return "Add your first and last name.";
-    if (!fields.email || fields.email.indexOf("@") === -1) return "Add a valid email.";
-    if (!fields.phone) return "Add a phone number.";
-    if (extras) return extras(fields);
-    return "";
+  function clearErrors(form) {
+    form.querySelectorAll(".field-error").forEach(function (node) {
+      node.remove();
+    });
+    form.querySelectorAll("[aria-invalid]").forEach(function (input) {
+      input.removeAttribute("aria-invalid");
+      input.removeAttribute("aria-describedby");
+    });
+  }
+
+  function setFieldError(input, message) {
+    if (!input.id) input.id = (input.form && input.form.id ? input.form.id : "field") + "-" + input.name;
+    const errorId = input.id + "-error";
+    input.setAttribute("aria-invalid", "true");
+    input.setAttribute("aria-describedby", errorId);
+    const error = document.createElement("span");
+    error.className = "field-error";
+    error.id = errorId;
+    error.textContent = message;
+    input.insertAdjacentElement("afterend", error);
+  }
+
+  function validateFields(form, checks) {
+    clearErrors(form);
+    let first = null;
+    checks.forEach(function (check) {
+      const input = form.elements[check.name];
+      if (!input || input.disabled) return;
+      const message = check.test(input);
+      if (message) {
+        setFieldError(input, message);
+        if (!first) first = input;
+      }
+    });
+    if (first) first.focus();
+    return !first;
+  }
+
+  function requireText(message) {
+    return function (input) {
+      return String(input.value || "").trim() ? "" : message;
+    };
+  }
+
+  function contactChecks() {
+    return [
+      { name: "first", test: requireText("Enter your first name.") },
+      { name: "last", test: requireText("Enter your last name.") },
+      {
+        name: "email",
+        test: function (input) {
+          return isValidEmail(String(input.value || "").trim())
+            ? ""
+            : "Enter an email address like name@email.com.";
+        }
+      },
+      {
+        name: "phone",
+        test: function (input) {
+          return isValidPhone(String(input.value || "").trim())
+            ? ""
+            : "Enter a 10-digit phone number.";
+        }
+      }
+    ];
+  }
+
+  function onFieldEdit(event) {
+    const input = event.target;
+    if (!input || !input.form || input.getAttribute("aria-invalid") !== "true") return;
+    input.removeAttribute("aria-invalid");
+    input.removeAttribute("aria-describedby");
+    const next = input.nextElementSibling;
+    if (next && next.classList.contains("field-error")) next.remove();
+  }
+
+  function customerErrorMessage() {
+    const email = String(config.inquiryEmail || "").trim();
+    if (email) {
+      return "We couldn’t send that. Your details are still here. Try again, or email " + email + ".";
+    }
+    return "We couldn’t send that. Your details are still here. Please try again.";
+  }
+
+  function submissionSucceeded(data) {
+    return Boolean(data) && (data.success === true || data.success === "true");
+  }
+
+  function setBusy(form, busy) {
+    const button = form.querySelector("button[type=submit]");
+    if (!button) return;
+    if (!button.dataset.label) button.dataset.label = button.textContent;
+    button.dataset.sending = busy ? "1" : "0";
+    button.disabled = busy;
+    button.textContent = busy ? "Sending…" : button.dataset.label;
+  }
+
+  function postInquiry(payload) {
+    const endpoint = String(config.formEndpoint || "").trim();
+    if (!endpoint) return Promise.reject(new Error("Missing form endpoint"));
+    payload._honey = "";
+    payload._captcha = "false";
+    payload._template = "table";
+    return fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(payload)
+    }).then(function (response) {
+      return response
+        .json()
+        .catch(function () {
+          return {};
+        })
+        .then(function (data) {
+          if (!response.ok || !submissionSucceeded(data)) {
+            const error = new Error((data && data.message) || "Request failed");
+            error.detail = data;
+            error.status = response.status;
+            throw error;
+          }
+          return data;
+        });
+    });
+  }
+
+  function honeyFilled(form) {
+    const honey = form.querySelector('[name="_honey"]');
+    return Boolean(honey && String(honey.value || "").trim());
+  }
+
+  function sendForm(form, noticeId, payload, successMessage, afterSuccess) {
+    if (honeyFilled(form) || !String(config.formEndpoint || "").trim()) {
+      showNotice(noticeId, customerErrorMessage(), true);
+      focusNotice(noticeId);
+      return;
+    }
+    setBusy(form, true);
+    postInquiry(payload)
+      .then(function () {
+        clearErrors(form);
+        form.reset();
+        showNotice(noticeId, successMessage, false);
+        if (afterSuccess) afterSuccess();
+        focusNotice(noticeId);
+      })
+      .catch(function () {
+        showNotice(noticeId, customerErrorMessage(), true);
+        focusNotice(noticeId);
+      })
+      .then(function () {
+        setBusy(form, false);
+        if (form.id === "order-form") updateOrderSummary();
+      });
+  }
+
+  function flavorSummary(quantities) {
+    return availableFlavors()
+      .map(function (flavor) {
+        const qty = dozenCount(quantities[flavor.id] || "0") || 0;
+        return qty ? flavor.name + ": " + qty + " dozen" : "";
+      })
+      .filter(Boolean)
+      .join(" · ");
+  }
+
+  function updatesLine(form, yesText) {
+    return form.elements.updates && form.elements.updates.checked ? yesText : "No";
   }
 
   function handleOrderSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
-    const fields = formValues(form);
-    const contactError = missingContact(fields, function (values) {
-      if (!values.date) return "Choose a requested date.";
-      return "";
-    });
-    if (contactError) {
-      showNotice("order-notice", contactError, true);
-      return;
-    }
-    const quantities = orderQuantities();
-    const error = validateOrder(quantities);
-    if (error) {
-      showNotice("order-notice", error, true);
-      return;
-    }
-
-    const flavors = availableFlavors()
-      .map(function (flavor) {
-        const qty = quantities[flavor.id] || 0;
-        return qty ? flavor.name + ": " + qty + " dozen" : "";
-      })
-      .filter(Boolean)
-      .join("\n");
-    const total = Object.keys(quantities).reduce(function (sum, id) {
-      return sum + (quantities[id] || 0);
-    }, 0);
-
-    const body = [
-      "Tamale order inquiry",
-      "",
-      fields.first + " " + fields.last,
-      fields.email,
-      fields.phone,
-      "",
-      flavors,
-      "Total: " + total + " dozen (" + money.format(total * config.pricePerDozen) + " before confirmation)",
-      "Date: " + fields.date,
-      "Receive: " + fields.receive,
-      "",
-      "Notes:",
-      fields.notes || "(none)",
-      "",
-      optionalUpdatesLine(form.updates && form.updates.checked)
-    ].join("\n");
-
-    const mailto = buildMailto("Tamale order from " + fields.first + " " + fields.last, body);
-    showNotice(
-      "order-notice",
-      "Thanks. This is an inquiry, not a paid order. We’ll confirm availability and a total before you pay." +
-        (mailto ? " Your email app should open with the details." : " Add your inquiry email in config.js to receive these automatically."),
-      false
+    const fieldsOk = validateFields(
+      form,
+      contactChecks().concat([{ name: "date", test: function (input) { return dateError(input.value); } }])
     );
-    if (mailto) window.location.href = mailto;
-    form.reset();
-    renderFlavorFields();
-    updateOrderSummary();
+    const quantities = orderQuantities();
+    const orderError = validateOrder(quantities);
+    if (!fieldsOk) {
+      showNotice("order-notice", "Check the highlighted fields.", true);
+      return;
+    }
+    if (orderError) {
+      showNotice("order-notice", orderError, true);
+      const flavorInput = form.querySelector("[data-flavor-id]:not(:disabled)");
+      if (flavorInput) flavorInput.focus();
+      return;
+    }
+
+    const fields = formValues(form);
+    const total = availableFlavors().reduce(function (sum, flavor) {
+      return sum + (dozenCount(quantities[flavor.id] || "0") || 0);
+    }, 0);
+    const name = fields.first + " " + fields.last;
+    let success = "Order request sent. We’ll email you to confirm availability and the total.";
+    if (form.elements.updates && form.elements.updates.checked) {
+      success += " You also asked for a note when a new batch is ready.";
+    }
+    sendForm(
+      form,
+      "order-notice",
+      {
+        _subject: "Tamale order from " + name,
+        name: name,
+        email: fields.email,
+        phone: fields.phone,
+        request_type: "Tamale order",
+        order: flavorSummary(quantities),
+        total: total + " dozen (" + money.format(total * config.pricePerDozen) + " before confirmation)",
+        requested_date: fields.date,
+        pickup_or_delivery: fields.receive,
+        notes: fields.notes || "(none)",
+        updates: updatesLine(form, "Yes — batch updates")
+      },
+      success,
+      function () {
+        renderFlavorFields();
+        applyDateMins();
+        updateOrderSummary();
+      }
+    );
   }
 
   function handleCateringSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
-    const fields = formValues(form);
-    const contactError = missingContact(fields, function (values) {
-      if (!values.guests || Number(values.guests) < 1) return "Add an estimated guest count.";
-      if (!values.date) return "Choose an event date.";
-      if (!values.location) return "Add the event location.";
-      return "";
-    });
-    if (contactError) {
-      showNotice("catering-notice", contactError, true);
+    const fieldsOk = validateFields(
+      form,
+      contactChecks().concat([
+        {
+          name: "guests",
+          test: function (input) {
+            return /^[1-9]\d*$/.test(String(input.value || "").trim())
+              ? ""
+              : "Enter a guest count of at least 1.";
+          }
+        },
+        { name: "date", test: function (input) { return dateError(input.value); } },
+        { name: "location", test: requireText("Enter the event location.") }
+      ])
+    );
+    if (!fieldsOk) {
+      showNotice("catering-notice", "Check the highlighted fields.", true);
       return;
     }
-    const body = [
-      "Catering inquiry",
-      "",
-      fields.first + " " + fields.last,
-      fields.email,
-      fields.phone,
-      "",
-      "Guest count: " + fields.guests,
-      "Event date: " + fields.date,
-      "Location: " + fields.location,
-      "Service style: " + fields.style,
-      "Food preferences: " + (fields.food || "(none)"),
-      "",
-      "Details:",
-      fields.details || "(none)",
-      "",
-      optionalUpdatesLine(form.updates && form.updates.checked)
-    ].join("\n");
-
-    const mailto = buildMailto("Catering inquiry from " + fields.first + " " + fields.last, body);
-    showNotice(
+    const fields = formValues(form);
+    const name = fields.first + " " + fields.last;
+    let success = "Catering request sent. We’ll email you with availability and a quote.";
+    if (form.elements.updates && form.elements.updates.checked) {
+      success += " You also asked for notes about catering dates.";
+    }
+    sendForm(
+      form,
       "catering-notice",
-      "Thanks. We’ll follow up with availability and a quote. Submitting this form does not book the date." +
-        (mailto ? " Your email app should open with the details." : " Add your inquiry email in config.js to receive these automatically."),
-      false
+      {
+        _subject: "Catering inquiry from " + name,
+        name: name,
+        email: fields.email,
+        phone: fields.phone,
+        request_type: "Catering inquiry",
+        guest_count: fields.guests,
+        event_date: fields.date,
+        location: fields.location,
+        service_style: fields.style,
+        food_preferences: fields.food || "(none)",
+        details: fields.details || "(none)",
+        updates: updatesLine(form, "Yes — catering notes")
+      },
+      success,
+      applyDateMins
     );
-    if (mailto) window.location.href = mailto;
-    form.reset();
   }
 
   function handleEmailSignup(event) {
     event.preventDefault();
     const form = event.currentTarget;
+    const fieldsOk = validateFields(form, [
+      {
+        name: "email",
+        test: function (input) {
+          return isValidEmail(String(input.value || "").trim())
+            ? ""
+            : "Enter an email address like name@email.com.";
+        }
+      }
+    ]);
+    if (!fieldsOk) {
+      showNotice("signup-notice", "Check the highlighted field.", true);
+      return;
+    }
     const email = String(form.email.value || "").trim();
-    if (!email) return;
-    const mailto = buildMailto(
-      "Email list signup",
-      "Please add this address to the Arturo’s updates list:\n\n" + email
-    );
-    showNotice(
+    sendForm(
+      form,
       "signup-notice",
-      "You’re on the list request. We’ll send flavor, availability, and catering notes—not every inquiry is subscribed." +
-        (mailto ? "" : " Add your inquiry email in config.js to collect signups."),
-      false
+      {
+        _subject: "Updates request",
+        email: email,
+        request_type: "Updates request",
+        message: "Please email this address when a batch or catering date is coming up. This is a request, not an automatic mailing list."
+      },
+      "Updates request received. We’ll email you when a batch or catering date is coming up."
     );
-    if (mailto) window.location.href = mailto;
-    form.reset();
+  }
+
+  function renderContact() {
+    const phoneLink = document.getElementById("contact-phone");
+    const emailLink = document.getElementById("contact-email");
+    const address = document.getElementById("contact-address");
+    const phone = String(config.phone || "").trim();
+    const tel = formatPhoneTel(phone);
+    if (phoneLink) {
+      if (!phone || !tel) {
+        phoneLink.remove();
+      } else {
+        phoneLink.textContent = formatPhoneDisplay(phone);
+        phoneLink.href = "tel:" + tel;
+      }
+    }
+    if (emailLink) {
+      const email = String(config.inquiryEmail || "").trim();
+      if (!email) {
+        emailLink.remove();
+      } else {
+        emailLink.textContent = email;
+        emailLink.href = "mailto:" + email;
+      }
+    }
+    if (address) {
+      const street = String(config.streetAddress || "").trim();
+      if (!street) {
+        address.remove();
+      } else {
+        address.hidden = false;
+        address.textContent = street;
+      }
+    }
+    document.querySelectorAll("[data-venmo]").forEach(function (link) {
+      if (config.venmoUrl) link.href = config.venmoUrl;
+    });
+    if (config.venmoHandle) setText("[data-venmo-handle]", config.venmoHandle);
   }
 
   function injectSeo() {
@@ -330,15 +683,18 @@
       "@type": "FoodEstablishment",
       name: config.businessName,
       description: config.tagline + ". Tamales " + priceLabel() + ".",
+      url: config.siteUrl,
       areaServed: config.city + ", " + config.region,
       servesCuisine: "Mexican",
-      priceRange: money.format(config.pricePerDozen) + " per dozen"
+      priceRange: money.format(config.pricePerDozen) + " per dozen",
+      email: config.inquiryEmail
     };
-    if (config.phone) data.telephone = config.phone;
-    if (config.streetAddress) {
+    const tel = formatPhoneTel(config.phone);
+    if (tel) data.telephone = tel;
+    if (String(config.streetAddress || "").trim()) {
       data.address = {
         "@type": "PostalAddress",
-        streetAddress: config.streetAddress,
+        streetAddress: String(config.streetAddress).trim(),
         addressLocality: config.city,
         addressRegion: "MO"
       };
@@ -363,6 +719,9 @@
     });
   }
 
+  document.addEventListener("input", onFieldEdit);
+  document.addEventListener("change", onFieldEdit);
+
   document.addEventListener("DOMContentLoaded", function () {
     setText("[data-price]", priceLabel());
     setText("[data-price-number]", money.format(config.pricePerDozen));
@@ -370,23 +729,18 @@
     setText("[data-tagline]", config.tagline);
     setText("[data-area]", config.area);
     setText("[data-radius]", String(config.deliveryRadiusMiles));
-    document.querySelectorAll("[data-payments]").forEach(function (link) {
-      if (config.paymentsUrl) link.href = config.paymentsUrl;
-    });
-    document.querySelectorAll("[data-inbox]").forEach(function (link) {
-      if (config.ownerInboxUrl) link.href = config.ownerInboxUrl;
-    });
+    setText("[data-place]", config.city + ", " + config.region);
 
     renderMenu();
     renderFlavorFields();
+    renderContact();
+    applyDateMins();
     updateOrderSummary();
     injectSeo();
     setupNav();
 
     const flavorMount = document.getElementById("flavor-fields");
-    if (flavorMount) {
-      flavorMount.addEventListener("input", updateOrderSummary);
-    }
+    if (flavorMount) flavorMount.addEventListener("input", updateOrderSummary);
 
     const orderForm = document.getElementById("order-form");
     if (orderForm) orderForm.addEventListener("submit", handleOrderSubmit);

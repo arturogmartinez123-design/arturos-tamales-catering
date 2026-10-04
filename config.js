@@ -9,19 +9,24 @@ window.ArturoConfig = {
   city: "Kansas City",
   region: "Missouri",
   area: "Kansas City Northland",
+  siteUrl: "https://arturos-tamales-catering.onrender.com",
   pricePerDozen: 28,
   currency: "USD",
 
   /**
-   * When true, the order form will not accept more dozens than
-   * each flavor’s `dozensAvailable` value.
+   * Soonest date the forms will accept, counted from today.
+   * 0 allows today. 1 means tomorrow or later.
+   */
+  minimumLeadDays: 1,
+
+  /**
+   * STOCK — edit inventory here and nowhere else.
+   * dozensAvailable is how many dozen of that flavor are left in this batch.
+   * Set it to 0 to show the flavor as sold out. Set available to false to hide it.
+   * Set inventoryEnabled to false to stop enforcing these numbers.
    */
   inventoryEnabled: true,
 
-  /**
-   * Add a flavor object here when you introduce a new filling.
-   * Set available: false to hide it from the menu and forms.
-   */
   flavors: [
     {
       id: "green-chicken",
@@ -30,8 +35,7 @@ window.ArturoConfig = {
       description:
         "Juicy chicken and salsa verde in soft corn masa. A brighter, tangy dozen.",
       available: true,
-      dozensAvailable: 1,
-      image: "/images/green-chicken.jpg"
+      dozensAvailable: 1
     },
     {
       id: "red-pork",
@@ -45,22 +49,29 @@ window.ArturoConfig = {
   ],
 
   deliveryRadiusMiles: 10,
-  pickupNote: "Pickup from the Northland. Exact address is sent after we confirm.",
-  allergyNote:
-    "Tamales are made with corn masa and gluten-free ingredients. Shared kitchen—tell us about celiac needs or allergies before we confirm.",
 
   /**
-   * Optional. If you add an address, it will show in the footer and SEO markup.
+   * Contact. phone and streetAddress render only when they are non-empty.
+   * Leave streetAddress blank — do not invent one.
+   * A 10-digit US phone is shown as (816) 203-7610 and linked as tel:+1...
    */
+  phone: "816-203-7610",
   streetAddress: "",
-  phone: "",
 
-  /**
-   * Inquiries are prepared as an email draft. Replace with your inbox
-   * when you are ready to receive orders (or connect a form service).
-   */
+  /** Inbox for orders, catering requests, and update requests. */
   inquiryEmail: "arturogmartinez123@gmail.com",
 
-  paymentsUrl: "https://arturos-tamales-catering.pilgrims297.chatgpt.site/pay",
-  ownerInboxUrl: "https://arturos-tamales-catering.pilgrims297.chatgpt.site/inquiries"
+  /**
+   * Form backend. Order, catering, and update forms POST JSON here.
+   * This is FormSubmit’s AJAX endpoint (no account). The first submission
+   * emails a one-time activation link to inquiryEmail — open it and click
+   * Activate Form once. Until that click, the site keeps the visitor’s
+   * answers and shows an error instead of a success message.
+   * Replace the URL if you switch providers.
+   */
+  formEndpoint: "https://formsubmit.co/ajax/arturogmartinez123@gmail.com",
+
+  /** Pay only after an order is confirmed. Handle from the existing Venmo link. */
+  venmoHandle: "@Arturo-Gomez-70",
+  venmoUrl: "https://venmo.com/Arturo-Gomez-70"
 };
