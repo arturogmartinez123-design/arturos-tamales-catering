@@ -5,7 +5,8 @@ cd "$(dirname "$0")"
 rm -rf dist
 mkdir -p dist/assets
 cp index.html styles.css config.js app.js 404.html robots.txt sitemap.xml favicon.ico apple-touch-icon.png dist/
-cp assets/logo-badge.svg \
+cp assets/logo-header.svg \
+  assets/logo-header-compact.svg \
   assets/logo-icon.svg \
   assets/hero-tamales.webp \
   assets/hero-tamales-640.webp \

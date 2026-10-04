@@ -91,8 +91,11 @@ window.ArturoConfig = {
   venmoAvatarAlt: "",
 
   /**
-   * Header, footer, and 404 mark. To swap the logo, change logoMark and set the
-   * same path on each img[data-logo] so the mark still shows if JavaScript is off.
+   * Header, footer, and 404 lockup. To swap the logo, change these paths and the
+   * matching img src values so the mark still shows if JavaScript is off.
+   * logoMark is the full lockup (monogram, ARTURO'S, tagline).
+   * logoMarkCompact is the shorter lockup used on small screens.
    */
-  logoMark: "assets/logo-icon.svg"
+  logoMark: "assets/logo-header.svg",
+  logoMarkCompact: "assets/logo-header-compact.svg"
 };

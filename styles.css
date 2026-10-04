@@ -88,35 +88,20 @@ a { color: inherit; }
 }
 
 .brandmark {
-  width: 72px;
-  height: 72px;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
   object-fit: contain;
-  transition: width 0.25s ease, height 0.25s ease;
+  object-position: left center;
 }
 
-.topbar.is-condensed .brandmark { width: 56px; height: 56px; }
+.brandmark-short { display: none; }
 
-.brand-name {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-}
+.topbar .brandmark-full { width: min(360px, 42vw); }
+.topbar.is-condensed .brandmark-full { width: min(300px, 36vw); }
 
-.brand-name strong {
-  font-family: Fraunces, Georgia, serif;
-  font-size: 1.55rem;
-  font-weight: 560;
-  letter-spacing: -0.03em;
-  color: var(--cream);
-}
-
-.brand-name span {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
+.brand-foot .brandmark-full { width: min(320px, 100%); }
+.missing .brandmark-full { width: min(420px, 100%); }
 
 .nav-toggle {
   display: none;
@@ -724,11 +709,7 @@ footer {
   flex-wrap: wrap;
 }
 
-.brand-foot .brand-name strong { color: #f6efe6; font-size: 1.2rem; }
-
 .foot-title { display: block; margin-top: 14px; }
-
-.brand-foot .brand-name span { color: var(--gold-bright); }
 
 .foot nav {
   display: flex;
@@ -872,7 +853,12 @@ footer :focus-visible { outline-color: var(--gold-bright); }
 
   .topbar, .topbar.is-condensed { padding-left: 14px; padding-right: 14px; }
 
-  .brand-name span { display: none; }
+  .brandmark-full { display: none; }
+  .brandmark-short { display: block; }
+  .topbar .brandmark-short,
+  .topbar.is-condensed .brandmark-short { width: min(228px, 58vw); }
+  .brand-foot .brandmark-short,
+  .missing .brandmark-short { width: min(280px, 100%); }
 
   .gallery { grid-template-columns: 1fr; }
 
