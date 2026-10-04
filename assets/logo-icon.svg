@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Arturo's">
+  <rect width="80" height="80" rx="18" fill="#fbf6ee"/>
+  <g transform="translate(6 8) scale(0.34)">
+  <g stroke="#e6a31a" stroke-width="3.2" stroke-linecap="round">
+    <path d="M46 8v10M46 40v10M28 29H18M74 29H64"/>
+    <path d="M32.5 15.5 26 9M59.5 15.5 66 9M32.5 42.5 26 49M59.5 42.5 66 49"/>
+  </g>
+  <circle cx="46" cy="29" r="12" fill="#e6a31a"/>
+  <path fill="#3e6b45" fill-rule="evenodd" d="M132 18h54c2 0 4 2 4 4v20c-4.2 0-4.6 7-9.2 7s-5-7-9.2-7-4.6 7-9.2 7-5-7-9.2-7-4.6 7-9.2 7-5-7-9.2-7-4.6 7-8.8 7V22c0-2 1.8-4 4-4zm26.2 8.2c2.6 0 4.8 1.7 4.8 4.3 0 3.4-4.8 7.3-4.8 7.3s-4.8-3.9-4.8-7.3c0-2.6 2.2-4.3 4.8-4.3z"/>
+  <path fill="#d8c4a2" d="M58 150c-28-18-36-58-18-92 14-8 34-6 48 8-22 18-30 48-30 84z"/>
+  <path fill="#efe4cf" d="M142 148c28-20 34-60 14-92-16-8-36-4-48 12 22 16 32 46 34 80z"/>
+  <path fill="#2f6a45" d="M46 142c18-16 34-14 48-4-6 16-22 26-48 22-8-2-12-8 0-18z"/>
+  <path fill="#3e6b45" d="M154 138c-16-14-34-10-46 0 8 16 26 24 50 16 6-2 8-8-4-16z"/>
+  <path fill="#c4512f" d="M100 46c22 0 34 18 34 42 0 28-14 52-34 62-20-10-34-34-34-62 0-24 12-42 34-42z"/>
+  <path fill="#f2c14d" d="M100 40c12 2 20 10 20 18 0 4-8 8-20 8s-20-4-20-8c0-8 8-16 20-18z"/>
+  <g fill="#e6a31a">
+    <ellipse cx="90" cy="50" rx="3.1" ry="4"/>
+    <ellipse cx="100" cy="48" rx="3.1" ry="4.2"/>
+    <ellipse cx="110" cy="50" rx="3.1" ry="4"/>
+    <ellipse cx="95" cy="57" rx="3" ry="3.6"/>
+    <ellipse cx="105" cy="57" rx="3" ry="3.6"/>
+  </g>
+  <circle cx="90" cy="86" r="3.3" fill="#fff8ee"/>
+  <circle cx="110" cy="86" r="3.3" fill="#fff8ee"/>
+  <path d="M88 98c4 6 20 6 24 0" stroke="#fff8ee" stroke-width="3" stroke-linecap="round"/>
+</g>
+</svg>

@@ -35,7 +35,11 @@ window.ArturoConfig = {
       description:
         "Juicy chicken and salsa verde in soft corn masa. A brighter, tangy dozen.",
       available: true,
-      dozensAvailable: 1
+      dozensAvailable: 1,
+      image: "assets/catering-serving-tamales.jpg",
+      imageAlt: "Plated tamales with salsa in a kitchen",
+      imageWidth: 800,
+      imageHeight: 533
     },
     {
       id: "red-pork",
@@ -44,7 +48,11 @@ window.ArturoConfig = {
       description:
         "Tender shredded pork in a deep red chile sauce. The savory dozen most tables start with.",
       available: true,
-      dozensAvailable: 3
+      dozensAvailable: 3,
+      image: "assets/catering-tamale-tray.jpg",
+      imageAlt: "Tray of tamales on a wooden board, some opened to show the filling",
+      imageWidth: 960,
+      imageHeight: 640
     }
   ],
 
