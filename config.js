@@ -35,9 +35,9 @@ window.ArturoConfig = {
       description:
         "Juicy chicken and salsa verde in soft corn masa. A brighter, tangy dozen.",
       available: true,
-      dozensAvailable: 1,
+      dozensAvailable: 3,
       image: "assets/green-chicken.webp",
-      imageAlt: "A green chicken tamale in its husk on a dark slate plate, with salsa verde",
+      imageAlt: "Green chicken tamale in a corn husk on a dark plate, with salsa verde on the side",
       imageWidth: 960,
       imageHeight: 540
     },
@@ -50,7 +50,7 @@ window.ArturoConfig = {
       available: true,
       dozensAvailable: 3,
       image: "assets/red-pork.webp",
-      imageAlt: "Shredded red pork tamales on a dark slate plate with red salsa",
+      imageAlt: "Shredded red pork tamale on a dark slate plate, with salsa beside it",
       imageWidth: 960,
       imageHeight: 540
     }
@@ -81,5 +81,18 @@ window.ArturoConfig = {
 
   /** Pay only after an order is confirmed. Handle from the existing Venmo link. */
   venmoHandle: "@Arturo-Gomez-70",
-  venmoUrl: "https://venmo.com/Arturo-Gomez-70"
+  venmoUrl: "https://venmo.com/Arturo-Gomez-70",
+
+  /**
+   * Optional round photo beside the Venmo button. Leave blank until a photo is provided.
+   * venmoAvatar is a path such as "assets/venmo-avatar.jpg".
+   */
+  venmoAvatar: "",
+  venmoAvatarAlt: "",
+
+  /**
+   * Header, footer, and 404 mark. To swap the logo, change logoMark and set the
+   * same path on each img[data-logo] so the mark still shows if JavaScript is off.
+   */
+  logoMark: "assets/logo-icon.svg"
 };

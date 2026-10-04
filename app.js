@@ -693,6 +693,28 @@
       if (config.venmoUrl) link.href = config.venmoUrl;
     });
     if (config.venmoHandle) setText("[data-venmo-handle]", config.venmoHandle);
+    renderVenmoAvatar();
+  }
+
+  function renderBrand() {
+    const mark = String(config.logoMark || "").trim();
+    if (!mark) return;
+    document.querySelectorAll("[data-logo]").forEach(function (img) {
+      img.src = mark;
+    });
+  }
+
+  function renderVenmoAvatar() {
+    const src = String(config.venmoAvatar || "").trim();
+    const row = document.querySelector(".pay-actions");
+    if (!row || !src) return;
+    const photo = document.createElement("img");
+    photo.className = "venmo-avatar";
+    photo.src = src;
+    photo.alt = String(config.venmoAvatarAlt || "").trim() || "Venmo profile";
+    photo.width = 48;
+    photo.height = 48;
+    row.insertBefore(photo, row.firstChild);
   }
 
   function injectSeo() {
@@ -776,6 +798,7 @@
     setText("[data-radius]", String(config.deliveryRadiusMiles));
     setText("[data-place]", config.city + ", " + config.region);
 
+    renderBrand();
     renderMenu();
     renderFlavorFields();
     renderContact();
