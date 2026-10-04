@@ -698,10 +698,17 @@
 
   function renderBrand() {
     const mark = String(config.logoMark || "").trim();
-    if (!mark) return;
-    document.querySelectorAll("[data-logo]").forEach(function (img) {
-      img.src = mark;
-    });
+    if (mark) {
+      document.querySelectorAll("[data-logo]").forEach(function (img) {
+        img.src = mark;
+      });
+    }
+    const compact = String(config.logoMarkCompact || "").trim();
+    if (compact) {
+      document.querySelectorAll("[data-logo-compact]").forEach(function (img) {
+        img.src = compact;
+      });
+    }
   }
 
   function renderVenmoAvatar() {

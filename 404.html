@@ -17,11 +17,8 @@
 <body class="missing">
   <main class="missing-main">
     <a class="brand" href="/">
-      <img class="brandmark" data-logo src="/assets/logo-icon.svg" alt="" width="500" height="500" />
-      <span class="brand-name">
-        <strong>Arturo’s</strong>
-        <span>Tamales &amp; Catering</span>
-      </span>
+      <img class="brandmark brandmark-full" data-logo src="/assets/logo-header.svg" alt="Arturo’s Tamales &amp; Catering" width="824" height="150" />
+      <img class="brandmark brandmark-short" data-logo-compact src="/assets/logo-header-compact.svg" alt="Arturo’s Tamales &amp; Catering" width="784" height="118" />
     </a>
     <p class="eyebrow">404</p>
     <h1>That page isn’t on the menu.</h1>
@@ -31,10 +28,15 @@
   <script src="/config.js"></script>
   <script>
     (function () {
-      var mark = window.ArturoConfig && ArturoConfig.logoMark;
-      if (!mark) return;
-      var src = mark.charAt(0) === "/" ? mark : "/" + mark.replace(/^\.\//, "");
-      document.querySelectorAll("[data-logo]").forEach(function (img) { img.src = src; });
+      var cfg = window.ArturoConfig || {};
+      function abs(mark) {
+        if (!mark) return "";
+        return mark.charAt(0) === "/" ? mark : "/" + String(mark).replace(/^\.\//, "");
+      }
+      var mark = abs(cfg.logoMark);
+      if (mark) document.querySelectorAll("[data-logo]").forEach(function (img) { img.src = mark; });
+      var compact = abs(cfg.logoMarkCompact);
+      if (compact) document.querySelectorAll("[data-logo-compact]").forEach(function (img) { img.src = compact; });
     })();
   </script>
 </body>
