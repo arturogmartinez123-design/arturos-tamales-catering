@@ -49,10 +49,33 @@
           : soldOut
             ? "Sold out for this batch"
             : left + " dozen available";
+        const photo = flavor.image
+          ? '<img src="' +
+            escapeHtml(flavor.image) +
+            '" alt="' +
+            escapeHtml(flavor.imageAlt || flavor.name) +
+            '" width="' +
+            escapeHtml(flavor.imageWidth || 800) +
+            '" height="' +
+            escapeHtml(flavor.imageHeight || 533) +
+            '" loading="lazy" decoding="async" />'
+          : "";
         return (
-          '<article class="' +
-          (soldOut ? "sold-out" : "") +
+          '<article class="flavor-card' +
+          (soldOut ? " sold-out" : "") +
           '">' +
+          '<div class="flavor-media">' +
+          photo +
+          '<span class="badge badge-price">' +
+          escapeHtml(money.format(config.pricePerDozen)) +
+          "</span>" +
+          '<span class="badge badge-stock' +
+          (soldOut ? " is-out" : "") +
+          '">' +
+          escapeHtml(stock) +
+          "</span>" +
+          "</div>" +
+          '<div class="flavor-body">' +
           '<span class="category">' +
           escapeHtml(flavor.category) +
           "</span>" +
@@ -62,15 +85,12 @@
           "<p>" +
           escapeHtml(flavor.description) +
           "</p>" +
-          '<p class="stock">' +
-          escapeHtml(stock) +
-          "</p>" +
           (soldOut
             ? '<span class="cardLink muted">Currently unavailable</span>'
             : '<a class="cardLink" href="#order">Order ' +
               escapeHtml(flavor.name) +
               "</a>") +
-          "</article>"
+          "</div></article>"
         );
       })
       .join("");
@@ -703,6 +723,31 @@
     document.head.appendChild(script);
   }
 
+  function setupHeader() {
+    const header = document.querySelector(".topbar");
+    if (!header) return;
+    function onScroll() {
+      header.classList.toggle("is-condensed", window.scrollY > 8);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  function setupReveal() {
+    const nodes = document.querySelectorAll(".reveal");
+    if (!nodes.length) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-in");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -4% 0px" });
+    nodes.forEach(function (node) { observer.observe(node); });
+  }
+
   function setupNav() {
     const toggle = document.querySelector(".nav-toggle");
     const nav = document.getElementById("site-nav");
@@ -737,6 +782,8 @@
     applyDateMins();
     updateOrderSummary();
     injectSeo();
+    setupHeader();
+    setupReveal();
     setupNav();
 
     const flavorMount = document.getElementById("flavor-fields");

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Arturo's">
+  <rect width="500" height="500" rx="96" fill="#f4efe6"/>
+  <circle cx="250" cy="250" r="214" fill="#f4efe6"/>
+  <circle cx="250" cy="250" r="208" fill="none" stroke="#c6a15a" stroke-width="8"/>
+  <circle cx="250" cy="250" r="186" fill="none" stroke="#1b4d34" stroke-width="22"/>
+  <circle cx="250" cy="250" r="164" fill="none" stroke="#1b4d34" stroke-width="6"/>
+  <g transform="translate(250 258) scale(1.15)">
+    <g transform="rotate(36)" fill="none">
+      <path fill="#c6a15a" d="M -118 0 C -78 -6 -36 -30 8 -27 C 52 -24 96 -8 122 0 C 96 10 50 32 6 28 C -40 24 -80 8 -118 0 Z"/>
+      <path d="M -90 0 C -20 -2 40 2 104 0" stroke="#8d6b2e" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M -10 -4 C 8 -16 28 -18 48 -8" stroke="#a07b38" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M -16 3 C 4 16 26 18 44 8" stroke="#a07b38" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M 36 -2 C 52 -10 70 -8 86 -2" stroke="#a07b38" stroke-width="1.1" stroke-linecap="round"/>
+    </g>
+    <g transform="rotate(-36)" fill="none">
+      <path fill="#d4b06a" d="M -118 0 C -78 -6 -36 -30 8 -27 C 52 -24 96 -8 122 0 C 96 10 50 32 6 28 C -40 24 -80 8 -118 0 Z"/>
+      <path d="M -90 0 C -20 -2 40 2 104 0" stroke="#8d6b2e" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M -10 -4 C 8 -16 28 -18 48 -8" stroke="#a07b38" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M -16 3 C 4 16 26 18 44 8" stroke="#a07b38" stroke-width="1.1" stroke-linecap="round"/>
+      <path d="M 36 -2 C 52 -10 70 -8 86 -2" stroke="#a07b38" stroke-width="1.1" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>
