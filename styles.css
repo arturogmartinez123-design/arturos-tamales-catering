@@ -88,13 +88,13 @@ a { color: inherit; }
 }
 
 .brandmark {
-  width: 62px;
-  height: 62px;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
   transition: width 0.25s ease, height 0.25s ease;
 }
 
-.topbar.is-condensed .brandmark { width: 48px; height: 48px; }
+.topbar.is-condensed .brandmark { width: 56px; height: 56px; }
 
 .brand-name {
   display: flex;
