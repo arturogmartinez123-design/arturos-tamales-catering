@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Co-Pilot Demo Shop</title>
+    <style>
+      :root {
+        --ink: #1c1916;
+        --accent: #c45c26;
+        --bg: #f7f1e8;
+      }
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        color: var(--ink);
+        background: linear-gradient(180deg, #f7f1e8, #e8dfd0);
+      }
+      header {
+        padding: 48px 24px 32px;
+        background: radial-gradient(circle at 20% 20%, #f0d7bf, transparent 50%),
+          #2f5d50;
+        color: #fff;
+      }
+      header h1 {
+        margin: 0 0 8px;
+        font-size: 42px;
+      }
+      nav a {
+        color: #f7f1e8;
+        margin-right: 16px;
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 32px 24px 80px;
+      }
+      section {
+        margin: 48px 0;
+      }
+      h2 {
+        font-size: 28px;
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 6px;
+      }
+      .cta {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 12px 18px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font: inherit;
+        cursor: pointer;
+      }
+      form {
+        display: grid;
+        gap: 10px;
+        max-width: 360px;
+      }
+      input,
+      textarea {
+        padding: 10px;
+        border: 1px solid #cfc4b4;
+        border-radius: 6px;
+        font: inherit;
+      }
+      .fine {
+        color: #5c534a;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <h1>Fresh Kitchen Tools</h1>
+      <p>Equipment that keeps service lines moving without the fluff.</p>
+      <button class="cta" type="button" id="addCart">Add to cart</button>
+    </header>
+    <main>
+      <section id="features">
+        <h2>Features</h2>
+        <p>
+          Durable steel frames, dishwasher-safe parts, and clear labeling so your
+          team spends less time hunting for the right tool.
+        </p>
+        <ul>
+          <li>Heat-safe handles rated to 450°F</li>
+          <li>Stackable storage footprints</li>
+          <li>Replacement parts stocked locally</li>
+        </ul>
+      </section>
+      <section id="pricing">
+        <h2>Pricing</h2>
+        <p class="fine">
+          Starter kits from $89. Pro bundles include on-site training and same-day
+          swap coverage for the first 90 days of service.
+        </p>
+        <button class="cta" type="button">Buy now</button>
+      </section>
+      <section id="contact">
+        <h2>Contact</h2>
+        <form id="contactForm">
+          <label>Name <input name="name" type="text" /></label>
+          <label>Email <input name="email" type="email" /></label>
+          <label>Password (should never be captured) <input name="password" type="password" /></label>
+          <label>Card number (should never be captured) <input name="card_number" type="text" autocomplete="cc-number" /></label>
+          <label>Message <textarea name="message" rows="3"></textarea></label>
+          <button class="cta" type="submit">Send message</button>
+        </form>
+      </section>
+    </main>
+    <script>
+      document.getElementById("addCart").addEventListener("click", () => {
+        alert("Added to cart (demo)");
+      });
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Submitted (demo)");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Page Co-Pilot</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <div>
+          <h1>Live Page Co-Pilot</h1>
+          <p class="sub" id="pageMeta">Waiting for page…</p>
+        </div>
+      </div>
+      <button id="pauseBtn" class="btn ghost" type="button" title="Pause page capture">
+        Pause
+      </button>
+    </header>
+
+    <nav class="modes" aria-label="Feedback mode">
+      <button class="mode active" data-mode="copy" type="button">Copy review</button>
+      <button class="mode" data-mode="ux" type="button" title="Coming soon">UX</button>
+      <button class="mode" data-mode="learning" type="button" title="Coming soon">
+        Learning
+      </button>
+    </nav>
+
+    <section class="status-bar">
+      <span id="connStatus" class="pill">Backend…</span>
+      <span id="captureStatus" class="pill muted">Capturing</span>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Live feedback</h2>
+        <button id="refreshFeedback" class="btn tiny" type="button">Refresh</button>
+      </div>
+      <div id="feedbackFeed" class="feed" aria-live="polite"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Navigate</h2>
+      </div>
+      <form id="navForm" class="row">
+        <input
+          id="navInput"
+          type="text"
+          placeholder='e.g. scroll to pricing, click Add to cart'
+          autocomplete="off"
+        />
+        <button class="btn" type="submit">Plan</button>
+      </form>
+      <div id="navPreview" class="preview hidden"></div>
+    </section>
+
+    <section class="panel chat-panel">
+      <div class="panel-head">
+        <h2>Chat</h2>
+      </div>
+      <div id="chatLog" class="chat-log"></div>
+      <form id="chatForm" class="row">
+        <input id="chatInput" type="text" placeholder="Ask about this page…" autocomplete="off" />
+        <button class="btn" type="submit">Send</button>
+      </form>
+    </section>
+
+    <details class="debug">
+      <summary>Last snapshot</summary>
+      <pre id="snapshotDebug"></pre>
+    </details>
+
+    <script src="sidepanel.js"></script>
+  </body>
+</html>

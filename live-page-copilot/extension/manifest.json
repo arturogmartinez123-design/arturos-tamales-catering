@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Live Page Co-Pilot",
+  "version": "0.1.0",
+  "description": "See the page, navigate on command, and stream live copy feedback.",
+  "permissions": ["sidePanel", "activeTab", "scripting", "storage", "tabs"],
+  "host_permissions": ["http://localhost:8787/*", "http://127.0.0.1:8787/*", "<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Open Live Page Co-Pilot",
+    "default_icon": {
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "128": "icons/icon128.png"
+  }
+}
