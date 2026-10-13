@@ -1,0 +1,12 @@
+{
+  "name": "live-page-copilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome MV3 Live Page Co-Pilot + Fastify backend",
+  "scripts": {
+    "backend": "npm run start --prefix backend",
+    "backend:dev": "npm run dev --prefix backend",
+    "demo": "python3 -m http.server 4174 --directory demo",
+    "harness": "node scripts/harness-server.mjs"
+  }
+}

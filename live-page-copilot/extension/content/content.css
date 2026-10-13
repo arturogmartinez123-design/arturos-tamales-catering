@@ -1,0 +1,29 @@
+.lpc-highlight {
+  outline: 3px solid #c45c26 !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(196, 92, 38, 0.25) !important;
+  transition: outline 0.15s ease, box-shadow 0.15s ease;
+}
+
+.lpc-toast {
+  position: fixed;
+  z-index: 2147483646;
+  bottom: 16px;
+  right: 16px;
+  max-width: 320px;
+  padding: 10px 14px;
+  background: #1a1a1a;
+  color: #f5f0e8;
+  font: 13px/1.4 "Segoe UI", system-ui, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.lpc-toast.lpc-toast-show {
+  opacity: 1;
+  transform: translateY(0);
+}
